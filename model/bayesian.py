@@ -1,3 +1,6 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from data_prepared.load import load
 import pandas as pd
 import numpy as np
@@ -28,5 +31,5 @@ if __name__ == "__main__":
     # predictions = bayesian_model(training_dataset, testing_dataset)
     # print(predictions)
     
-    # Print PyMC3 version
-    print(pm.__version__)
+    print(training_dataset.head(5))
+
