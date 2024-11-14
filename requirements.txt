@@ -13,9 +13,13 @@ uvicorn==0.18.3
 
 #
 pandas>=1.0.5
+numpy
 pyspark
 requests
 tabulate
 
 #other
 yahoo_fin
+typing
+datetime
+os

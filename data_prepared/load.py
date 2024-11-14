@@ -2,8 +2,16 @@ import pandas as pd
 import numpy as np
 
 def main():
+    #Cynthia
     ubs_Bid_Ask_Spread_df=load_bid_ask_spread("/data/UBS.csv")
     ubs_volume_df=trading_volume("/data/UBS.csv")
+    # A
+
+    # B
+
+    # C
+
+    # D 
     
     # prepared model data
     df = pd.merge(ubs_Bid_Ask_Spread_df, ubs_volume_df, on="Date", how="inner")
