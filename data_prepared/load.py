@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def main():
+def load():
     #Cynthia
     ubs_Bid_Ask_Spread_df=load_bid_ask_spread("/data/UBS.csv")
     ubs_volume_df=trading_volume("/data/UBS.csv")
@@ -82,4 +82,4 @@ def trading_volume(file_path="/data/UBS.csv"):
 
 
 if __name__ == "__main__":
-    main()
+    load()
