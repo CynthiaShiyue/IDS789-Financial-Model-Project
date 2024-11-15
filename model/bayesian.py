@@ -20,9 +20,7 @@ def bayesian_model(training_dataset, testing_dataset):
     predictions = testing_dataset  # Placeholder for actual predictions
     return predictions
 
-def msfe_bayesian_model(predictions, testing_dataset):
-    error = 0  # Placeholder for MSFE calculation
-    return error
+
 
 if __name__ == "__main__":
     # Uncomment the following lines to test the full pipeline
