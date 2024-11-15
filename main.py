@@ -11,7 +11,7 @@ def main():
     
     #bayesian model prediction data
     bayesian_predictions=bayesian_model(training_dataset, testing_dataset)
-    #bayesian model visualizaiton(model_prediction VS real_Y)
+    #bayesian model visualization(model_prediction VS real_Y)
     
     
     

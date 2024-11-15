@@ -1,11 +1,17 @@
 import pandas as pd
 import numpy as np
 import os
+from functools import reduce
 
 def load():
     #Cynthia
+    ubs_stock_return=load_stock_return(file_path="data/UBS.csv")
     ubs_Bid_Ask_Spread_df=load_bid_ask_spread("data/UBS.csv")
     ubs_volume_df=trading_volume("data/UBS.csv")
+    
+    ubs_stock_return.reset_index(inplace=True)
+    ubs_Bid_Ask_Spread_df.reset_index(inplace=True)
+    ubs_volume_df.reset_index(inplace=True)
     # A
 
     # B
@@ -15,13 +21,53 @@ def load():
     # D 
     
     # prepared model data
-    df = pd.merge(ubs_Bid_Ask_Spread_df, ubs_volume_df, on="Date", how="inner")
+    # List of DataFrames
+    dfs = [ubs_stock_return, ubs_Bid_Ask_Spread_df, ubs_volume_df]
+
+    df = reduce(lambda left, right: pd.merge(left, right, on="Date", how="inner"), dfs)
+
     
     # split into training dataset(R),and testing dataset(P) 
     df["Date"] = pd.to_datetime(df["Date"]) # Convert the "Date" column to datetime format if it is not already
     training_dataset = df[df["Date"] < "2023-01-02"]
     testing_dataset = df[df["Date"] >= "2023-01-02"]
     return training_dataset,testing_dataset
+
+
+def load_stock_return(file_path="data/UBS.csv"):
+    """
+    Load stock data from a CSV file and calculate stock returns.
+
+    Parameters:
+        file_path (str): Path to the CSV file containing stock data.
+
+    Returns:
+        pd.DataFrame: A DataFrame with the 'Date' and log returns.
+    """
+    # Load the stock data, assuming the first column is the index (e.g., date)
+    stock_data = pd.read_csv(file_path, index_col=0)
+    
+    # Check if the index is named "Date"
+    if stock_data.index.name != "Date":
+        stock_data.index.name = "Date"
+    
+    # Reset index to make 'Date' a column
+    stock_data.reset_index(inplace=True)
+    
+    # Ensure the 'close' column is present
+    if 'close' not in stock_data.columns:
+        raise ValueError("The dataset must contain a 'close' column for stock prices.")
+    
+    # Calculate the daily log stock returns
+    stock_data['log_return'] = np.log(stock_data['close'] / stock_data['close'].shift(1))
+    
+    # Drop rows with NaN values resulting from the calculation
+    stock_data.dropna(inplace=True)
+    
+    return stock_data[['Date', 'log_return']]
+
+
+
 
 def load_bid_ask_spread(file_path="data/UBS.csv"):
     """
@@ -95,3 +141,4 @@ def trading_volume(file_path="data/UBS.csv"):
 
 if __name__ == "__main__":
     load()
+    
