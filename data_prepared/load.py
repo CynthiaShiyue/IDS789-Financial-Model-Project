@@ -3,71 +3,98 @@ import numpy as np
 import os
 from functools import reduce
 
-def load():
-    #Cynthia
-    ubs_stock_return=load_stock_return(file_path="data/UBS.csv")
-    ubs_Bid_Ask_Spread_df=load_bid_ask_spread("data/UBS.csv")
-    ubs_volume_df=trading_volume("data/UBS.csv")
-    
-    ubs_stock_return.reset_index(inplace=True)
-    ubs_Bid_Ask_Spread_df.reset_index(inplace=True)
-    ubs_volume_df.reset_index(inplace=True)
-   
-    # Kaisen's data
+from functools import reduce
+import pandas as pd
+
+def load(verbose=False):
+    # Load datasets
+    ubs_stock_return = load_stock_return(ticker="UBS", verbose=verbose)
+    ubs_Bid_Ask_Spread_df = load_bid_ask_spread("data/UBS.csv")
+    ubs_volume_df = trading_volume("data/UBS.csv")
     vix_data = load_cboe_vix(file_path="data/^VIX.csv")
     eur_chf_data = load_eur_chf(file_path="data/EURCHF=X.csv")
+    DB_stock_return = load_stock_return(ticker="DB", verbose=verbose)
+    MS_stock_return = load_stock_return(ticker="MS", verbose=verbose)
 
-    # Combine all datasets
+    # Combine all datasets into a list
     dfs = [
         ubs_stock_return,
         ubs_Bid_Ask_Spread_df,
         ubs_volume_df,
         vix_data,
         eur_chf_data,
+        DB_stock_return,
+        MS_stock_return,
     ]
-    # Merge datasets, avoiding duplicate column conflicts
+
+    # Ensure all 'Date' columns are in datetime64[ns] format
+    for df in dfs:
+        df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+
+    # Merge datasets on 'Date'
     df = reduce(lambda left, right: pd.merge(left, right, on="Date", how="inner"), dfs)
 
-    
-    # split into training dataset(R),and testing dataset(P) 
-    df["Date"] = pd.to_datetime(df["Date"]) # Convert the "Date" column to datetime format if it is not already
+    # Split into training and testing datasets
     training_dataset = df[df["Date"] < "2023-01-02"]
     testing_dataset = df[df["Date"] >= "2023-01-02"]
-    return training_dataset,testing_dataset
+
+    return training_dataset, testing_dataset
 
 
-def load_stock_return(file_path="data/UBS.csv"):
+
+def load_stock_return(ticker="UBS", verbose=False):
     """
     Load stock data from a CSV file and calculate stock returns.
 
     Parameters:
-        file_path (str): Path to the CSV file containing stock data.
+        ticker (str): Stock ticker symbol. Defaults to "UBS".
+        verbose (bool): If True, prints debug information. Defaults to False.
 
     Returns:
-        pd.DataFrame: A DataFrame with the 'Date' and log returns.
+        pd.DataFrame: A DataFrame with 'Date' and log returns.
     """
-    # Load the stock data, assuming the first column is the index (e.g., date)
-    stock_data = pd.read_csv(file_path, index_col=0)
-    
-    # Check if the index is named "Date"
+    file_path = f"data/{ticker}.csv"
+
+    # Load the stock data
+    try:
+        stock_data = pd.read_csv(file_path, index_col=0)
+    except FileNotFoundError:
+        raise FileNotFoundError(f"The file for ticker '{ticker}' was not found at {file_path}.")
+    except pd.errors.EmptyDataError:
+        raise ValueError(f"The file for ticker '{ticker}' is empty.")
+
+    # Ensure the index is a datetime format
+    stock_data.index = pd.to_datetime(stock_data.index, errors='coerce')
+    if stock_data.index.isna().any():
+        raise ValueError("The index contains invalid or non-datetime values.")
+
+    # Ensure the index is named "Date"
     if stock_data.index.name != "Date":
         stock_data.index.name = "Date"
-    
+
     # Reset index to make 'Date' a column
     stock_data.reset_index(inplace=True)
-    
-    # Ensure the 'close' column is present
+
+    # Ensure the 'close' column is present and numeric
     if 'close' not in stock_data.columns:
         raise ValueError("The dataset must contain a 'close' column for stock prices.")
-    
+    if not pd.api.types.is_numeric_dtype(stock_data['close']):
+        raise ValueError("The 'close' column must contain numeric values.")
+
+    # Ensure there are enough unique values to calculate returns
+    if stock_data['close'].nunique() <= 1:
+        raise ValueError("The 'close' column must have more than one unique value to calculate returns.")
+
     # Calculate the daily log stock returns
-    stock_data['log_return'] = np.log(stock_data['close'] / stock_data['close'].shift(1))
-    
+    stock_data[f'{ticker} log_return'] = np.log(stock_data['close'] / stock_data['close'].shift(1))
+
     # Drop rows with NaN values resulting from the calculation
     stock_data.dropna(inplace=True)
-    
-    return stock_data[['Date', 'log_return']]
 
+    if verbose:
+        print(f"Processed data for {ticker}: {len(stock_data)} rows remaining after cleaning.")
+
+    return stock_data[['Date', f'{ticker} log_return']]
 
 
 
@@ -145,9 +172,9 @@ def load_cboe_vix(file_path="data/^VIX.csv"):
     vix_data.reset_index(inplace=True)
     if "close" not in vix_data.columns:
         raise ValueError("The dataset must contain a 'close' column for VIX prices.")
-    vix_data["log_return"] = np.log(vix_data["close"] / vix_data["close"].shift(1))
+    vix_data["VIX"] = np.log(vix_data["close"] / vix_data["close"].shift(1))
     vix_data.dropna(inplace=True)
-    return vix_data[["Date", "log_return"]]
+    return vix_data[["Date", "VIX"]]
 
 
 def load_eur_chf(file_path="data/EURCHF=X.csv"):
@@ -158,11 +185,11 @@ def load_eur_chf(file_path="data/EURCHF=X.csv"):
         raise ValueError(
             "The dataset must contain a 'close' column for EUR/CHF prices."
         )
-    eur_chf_data["log_return"] = np.log(
+    eur_chf_data["EURCHF"] = np.log(
         eur_chf_data["close"] / eur_chf_data["close"].shift(1)
     )
     eur_chf_data.dropna(inplace=True)
-    return eur_chf_data[["Date", "log_return"]]
+    return eur_chf_data[["Date", "EURCHF"]]
 
 
 if __name__ == "__main__":
@@ -172,9 +199,4 @@ if __name__ == "__main__":
     print("\nTesting Dataset:")
     print(testing_dataset.head())
 
-# D 
 
-
-if __name__ == "__main__":
-    load()
-    
