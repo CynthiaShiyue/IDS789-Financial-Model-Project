@@ -3,9 +3,6 @@ import numpy as np
 import os
 from functools import reduce
 
-from functools import reduce
-import pandas as pd
-
 def load(verbose=False):
     # Load datasets
     ubs_stock_return = load_stock_return(ticker="UBS", verbose=verbose)
