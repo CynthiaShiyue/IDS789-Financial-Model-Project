@@ -39,5 +39,7 @@ if __name__ == "__main__":
     # C: Oil Prices & Gold Price
     
     # D: two Competitors
+    extract_histData("MS", "2021-01-04", "2024-01-05")
+    extract_histData("DB", "2021-01-04", "2024-01-05")
 
 
