@@ -15,14 +15,22 @@ def load(verbose=False):
     eur_chf_data = load_eur_chf(file_path="data/EURCHF=X.csv")
     DB_stock_return = load_stock_return(ticker="DB", verbose=verbose)
     MS_stock_return = load_stock_return(ticker="MS", verbose=verbose)
+    oil_prices_df = load_oil_prices("data/CL=F.csv")
+    gold_prices_df = load_gold_prices("data/GC=F.csv")
 
-    # Combine all datasets into a list
+    oil_prices_df.reset_index(inplace=True)
+    gold_prices_df.reset_index(inplace=True)
+
+    # Combine all datasets
+
     dfs = [
         ubs_stock_return,
         ubs_Bid_Ask_Spread_df,
         ubs_volume_df,
         vix_data,
         eur_chf_data,
+        oil_prices_df,
+        gold_prices_df,
         DB_stock_return,
         MS_stock_return,
     ]
@@ -156,14 +164,6 @@ def trading_volume(file_path="data/UBS.csv"):
     
     return volume_data
     
-    
-    
-    
-# A
-
-# B
-
-# C
 
 
 def load_cboe_vix(file_path="data/^VIX.csv"):
@@ -190,6 +190,53 @@ def load_eur_chf(file_path="data/EURCHF=X.csv"):
     )
     eur_chf_data.dropna(inplace=True)
     return eur_chf_data[["Date", "EURCHF"]]
+
+
+def load_oil_prices(file_path="data/CL=F.csv"):
+    """
+    Load historical oil prices from a CSV file and calculate log returns.
+
+    Parameters:
+        file_path (str): Path to the CSV file containing oil prices data.
+
+    Returns:
+        pd.DataFrame: A DataFrame with the 'Date' and 'log_return' for oil prices.
+    """
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"File not found: {file_path}")
+
+    oil_data = pd.read_csv(file_path, index_col=0)
+    oil_data.index.name = 'Date'
+    oil_data.reset_index(inplace=True)
+
+    # Calculate the daily log returns
+    oil_data['oil_log_return'] = np.log(oil_data['adjclose'] / oil_data['adjclose'].shift(1))
+    oil_data.dropna(inplace=True)
+
+    return oil_data[['Date', 'oil_log_return']]
+
+def load_gold_prices(file_path="data/GC=F.csv"):
+    """
+    Load historical gold prices from a CSV file and calculate log returns.
+
+    Parameters:
+        file_path (str): Path to the CSV file containing gold prices data.
+
+    Returns:
+        pd.DataFrame: A DataFrame with the 'Date' and 'log_return' for gold prices.
+    """
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"File not found: {file_path}")
+
+    gold_data = pd.read_csv(file_path, index_col=0)
+    gold_data.index.name = 'Date'
+    gold_data.reset_index(inplace=True)
+
+    # Calculate the daily log returns
+    gold_data['gold_log_return'] = np.log(gold_data['adjclose'] / gold_data['adjclose'].shift(1))
+    gold_data.dropna(inplace=True)
+
+    return gold_data[['Date', 'gold_log_return']]
 
 
 if __name__ == "__main__":
