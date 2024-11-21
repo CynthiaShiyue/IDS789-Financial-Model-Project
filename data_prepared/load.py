@@ -245,5 +245,9 @@ if __name__ == "__main__":
     print(training_dataset.head())
     print("\nTesting Dataset:")
     print(testing_dataset.head())
+    # Save the datasets to CSV files
+    # training_dataset.to_csv('data_prepared/training_dataset.csv', index=False)
+    # testing_dataset.to_csv('data_prepared/testing_dataset.csv', index=False)
 
+    # print("Datasets have been saved as CSV files in the 'data_prepared' directory.")
 
