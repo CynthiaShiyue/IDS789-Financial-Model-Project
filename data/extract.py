@@ -33,11 +33,19 @@ if __name__ == "__main__":
     extract_histData("UBS", "2021-01-04", "2024-01-05")
     
     # A: SPY500 & FTSE 100 index
+    extract_histData("SPY", "2021-01-04", "2024-01-05")
+    extract_histData("^FTSE", "2021-01-04", "2024-01-05")
     
     # B: ^VIX & EUR/CHF
+    extract_histData("CL=F", "2021-01-04", "2024-01-05")  # Oil Prices (WTI Crude Oil Futures)
+    extract_histData("GC=F", "2021-01-04", "2024-01-05")  # Gold Prices (Gold Futures)
 
     # C: Oil Prices & Gold Price
-    
+    extract_histData("^VIX", "2021-01-04", "2024-01-05")
+    extract_histData("EURCHF=X", "2021-01-04", "2024-01-05")
+       
     # D: two Competitors
+    extract_histData("MS", "2021-01-04", "2024-01-05")
+    extract_histData("DB", "2021-01-04", "2024-01-05")
 
 
