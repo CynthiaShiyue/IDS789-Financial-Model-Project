@@ -12,18 +12,20 @@ def load():
     ubs_stock_return.reset_index(inplace=True)
     ubs_Bid_Ask_Spread_df.reset_index(inplace=True)
     ubs_volume_df.reset_index(inplace=True)
-    # A
+   
+    # Kaisen's data
+    vix_data = load_cboe_vix(file_path="data/^VIX.csv")
+    eur_chf_data = load_eur_chf(file_path="data/EURCHF=X.csv")
 
-    # B
-
-    # C
-
-    # D 
-    
-    # prepared model data
-    # List of DataFrames
-    dfs = [ubs_stock_return, ubs_Bid_Ask_Spread_df, ubs_volume_df]
-
+    # Combine all datasets
+    dfs = [
+        ubs_stock_return,
+        ubs_Bid_Ask_Spread_df,
+        ubs_volume_df,
+        vix_data,
+        eur_chf_data,
+    ]
+    # Merge datasets, avoiding duplicate column conflicts
     df = reduce(lambda left, right: pd.merge(left, right, on="Date", how="inner"), dfs)
 
     
@@ -135,6 +137,40 @@ def trading_volume(file_path="data/UBS.csv"):
 # B
 
 # C
+
+
+def load_cboe_vix(file_path="data/^VIX.csv"):
+    vix_data = pd.read_csv(file_path, index_col=0)
+    vix_data.index.name = "Date"
+    vix_data.reset_index(inplace=True)
+    if "close" not in vix_data.columns:
+        raise ValueError("The dataset must contain a 'close' column for VIX prices.")
+    vix_data["log_return"] = np.log(vix_data["close"] / vix_data["close"].shift(1))
+    vix_data.dropna(inplace=True)
+    return vix_data[["Date", "log_return"]]
+
+
+def load_eur_chf(file_path="data/EURCHF=X.csv"):
+    eur_chf_data = pd.read_csv(file_path, index_col=0)
+    eur_chf_data.index.name = "Date"
+    eur_chf_data.reset_index(inplace=True)
+    if "close" not in eur_chf_data.columns:
+        raise ValueError(
+            "The dataset must contain a 'close' column for EUR/CHF prices."
+        )
+    eur_chf_data["log_return"] = np.log(
+        eur_chf_data["close"] / eur_chf_data["close"].shift(1)
+    )
+    eur_chf_data.dropna(inplace=True)
+    return eur_chf_data[["Date", "log_return"]]
+
+
+if __name__ == "__main__":
+    training_dataset, testing_dataset = load()
+    print("Training Dataset:")
+    print(training_dataset.head())
+    print("\nTesting Dataset:")
+    print(testing_dataset.head())
 
 # D 
 
