@@ -18,8 +18,6 @@ def load(verbose=False):
     oil_prices_df = load_oil_prices("data/CL=F.csv")
     gold_prices_df = load_gold_prices("data/GC=F.csv")
 
-    oil_prices_df.reset_index(inplace=True)
-    gold_prices_df.reset_index(inplace=True)
 
     # Combine all datasets
 
@@ -151,10 +149,10 @@ def load_bid_ask_spread(file_path="data/UBS.csv"):
 
     # Calculate alpha and spread
     stock_data["alpha"] = stock_data["beta"] / stock_data["gamma"]
-    stock_data["Spread"] = 2 * (np.sqrt(np.exp(stock_data["alpha"]) - 1))
+    stock_data["Bid-Ask Spread"] = 2 * (np.sqrt(np.exp(stock_data["alpha"]) - 1))
 
     # Return only the 'Date' and 'Spread' columns
-    result = stock_data[["Date", "Spread"]]
+    result = stock_data[["Date", "Bid-Ask Spread"]]
 
     return result
 
@@ -264,8 +262,9 @@ if __name__ == "__main__":
     print(training_dataset.head())
     print("\nTesting Dataset:")
     print(testing_dataset.head())
-    # Save the datasets to CSV files
-    # training_dataset.to_csv('data_prepared/training_dataset.csv', index=False)
-    # testing_dataset.to_csv('data_prepared/testing_dataset.csv', index=False)
 
-    # print("Datasets have been saved as CSV files in the 'data_prepared' directory.")
+    #Save the datasets to CSV files
+    training_dataset.to_csv('data_prepared/training_dataset.csv', index=False)
+    testing_dataset.to_csv('data_prepared/testing_dataset.csv', index=False)
+
+    print("Datasets have been saved as CSV files in the 'data_prepared' directory.")
