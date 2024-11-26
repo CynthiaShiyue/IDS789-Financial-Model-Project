@@ -23,4 +23,4 @@ yahoo_fin
 typing
 datetime
 os
-pymc3
+pymc
