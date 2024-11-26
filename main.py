@@ -3,7 +3,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from data_prepared.load import load
 from model.bayesian import bayesian_model
-from lib import msfe,plot_predictions_vs_actual
+from model.lib import msfe,plot_predictions_vs_actual
 
 
 def main():
