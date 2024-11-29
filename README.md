@@ -1,7 +1,5 @@
 # IDS789-Financial-Model-Project
 
-
-
 ## Overview
 This project involves modeling stock prices based on risk indicators, comparing different machine learning models using time series analysis.
 
