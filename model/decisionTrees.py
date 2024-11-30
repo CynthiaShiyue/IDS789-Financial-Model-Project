@@ -19,6 +19,10 @@ for lag in range(1, 4):  # Example: Lag by 1, 2, and 3 days
     train[f"lag_{lag}"] = train["UBS log_return"].shift(lag)
     test[f"lag_{lag}"] = test["UBS log_return"].shift(lag)
 
+# Drop rows with NaN values introduced by lagging
+train = train.dropna()
+test = test.dropna()
+
 # Extract time-based features
 for dataset in [train, test]:
     dataset["day"] = dataset["Date"].dt.day
@@ -33,15 +37,6 @@ for dataset in [train, test]:
 
 # train.sample(5)
 # test.sample(5)
-
-# Update feature set
-X_train = train.drop(columns=["UBS log_return", "Date"])
-X_test = test.drop(columns=["UBS log_return", "Date"])
-
-
-# Drop rows with NaN values introduced by lagging
-train = train.dropna()
-test = test.dropna()
 
 # Update feature set
 X_train = train.drop(columns=["UBS log_return", "Date"])
@@ -65,3 +60,30 @@ r2 = r2_score(y_test, y_pred)
 print(f"Mean Absolute Error (MAE): {mae:.4f}")
 print(f"Mean Squared Forecast Error (MSFE): {mse:.4f}")
 print(f"R² Score: {r2:.4f}")
+
+from sklearn.model_selection import GridSearchCV
+
+# Set up hyperparameter grid
+param_grid = {
+    "max_depth": [3, 5, 10, None],
+    "min_samples_split": [2, 5, 10],
+    "min_samples_leaf": [1, 2, 4],
+}
+
+# Initialize model and GridSearchCV
+model = DecisionTreeRegressor(random_state=42)
+grid_search = GridSearchCV(
+    estimator=model, param_grid=param_grid, cv=5, scoring="neg_mean_squared_error"
+)
+
+# Fit grid search
+grid_search.fit(X_train, y_train)
+
+# Get the best model
+best_model = grid_search.best_estimator_
+print("Best Parameters:", grid_search.best_params_)
+
+# Predict and evaluate
+y_pred = best_model.predict(X_test)
+print("MAE:", mean_absolute_error(y_test, y_pred))
+print("MSE:", mean_squared_error(y_test, y_pred))
