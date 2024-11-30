@@ -24,3 +24,7 @@ typing
 datetime
 os
 pymc3
+
+#ML
+tensorflow
+scikit-learn
