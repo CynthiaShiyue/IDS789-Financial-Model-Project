@@ -10,10 +10,29 @@ test = pd.read_csv(
     r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\data_prepared\testing_dataset.csv"
 )
 
+# Convert the 'Date' column to datetime format
+train["Date"] = pd.to_datetime(train["Date"])
+test["Date"] = pd.to_datetime(test["Date"])
+
 # Create lagged features for UBS log_return
 for lag in range(1, 4):  # Example: Lag by 1, 2, and 3 days
     train[f"lag_{lag}"] = train["UBS log_return"].shift(lag)
     test[f"lag_{lag}"] = test["UBS log_return"].shift(lag)
+
+# Extract time-based features
+for dataset in [train, test]:
+    dataset["day"] = dataset["Date"].dt.day
+    dataset["month"] = dataset["Date"].dt.month
+    dataset["year"] = dataset["Date"].dt.year
+    dataset["day_of_week"] = dataset["Date"].dt.dayofweek
+
+# train.sample(5)
+# test.sample(5)
+
+# Update feature set
+X_train = train.drop(columns=["UBS log_return", "Date"])
+X_test = test.drop(columns=["UBS log_return", "Date"])
+
 
 # Drop rows with NaN values introduced by lagging
 train = train.dropna()
