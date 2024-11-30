@@ -1,6 +1,10 @@
 import pandas as pd
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+
+# from sklearn.model_selection import GridSearchCV
 
 # Load training and test datasets
 train = pd.read_csv(
@@ -10,7 +14,11 @@ test = pd.read_csv(
     r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\data_prepared\testing_dataset.csv"
 )
 
-# Update feature set
+# Ensure Date is in datetime format
+train["Date"] = pd.to_datetime(train["Date"])
+test["Date"] = pd.to_datetime(test["Date"])
+
+# target-explanatory split
 X_train = train.drop(columns=["UBS log_return", "Date"])
 y_train = train["UBS log_return"]
 X_test = test.drop(columns=["UBS log_return", "Date"])
@@ -33,7 +41,29 @@ print(f"Mean Absolute Error (MAE): {mae:.4f}")
 print(f"Mean Squared Forecast Error (MSFE): {mse:.4f}")
 print(f"R² Score: {r2:.4f}")
 
-# from sklearn.model_selection import GridSearchCV
+plt.figure(figsize=(10, 6))
+
+# Plot Actual values vs Predicted values
+plt.plot(test["Date"], y_test, label="Actual", color="blue", alpha=0.6)
+plt.plot(test["Date"], y_pred, label="Predicted", color="red", alpha=0.6)
+
+# Format x-axis for dates (using DateFormatter for readability)
+plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m"))
+plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
+plt.xticks(rotation=45)
+
+# Add labels and title
+plt.title("Actual vs Predicted Stock Returns for UBS", fontsize=14)
+plt.xlabel("Date", fontsize=12)
+plt.ylabel("UBS Log Return", fontsize=12)
+plt.legend()
+plt.tight_layout()  # Adjust layout to fit labels
+plt.savefig(
+    r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\model\decisiontree.png"
+)
+
+# Show the plot
+plt.show()
 
 # # Set up hyperparameter grid
 # param_grid = {
