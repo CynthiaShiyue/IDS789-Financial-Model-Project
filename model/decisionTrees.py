@@ -26,6 +26,11 @@ for dataset in [train, test]:
     dataset["year"] = dataset["Date"].dt.year
     dataset["day_of_week"] = dataset["Date"].dt.dayofweek
 
+# Add interaction terms
+for dataset in [train, test]:
+    dataset["spread_volume"] = dataset["Bid-Ask Spread"] * dataset["volume"]
+    dataset["vix_oil"] = dataset["VIX"] * dataset["oil_log_return"]
+
 # train.sample(5)
 # test.sample(5)
 
