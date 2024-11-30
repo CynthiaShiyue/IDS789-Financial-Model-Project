@@ -57,7 +57,7 @@ plt.title("Actual vs Predicted Stock Returns for UBS using Decision Trees", font
 plt.xlabel("Date", fontsize=12)
 plt.ylabel("UBS Log Return", fontsize=12)
 plt.legend()
-plt.tight_layout()  # Adjust layout to fit labels
+plt.tight_layout()
 plt.savefig(
     r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\model\decisiontree.png"
 )

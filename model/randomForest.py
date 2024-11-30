@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
 # from sklearn.model_selection import GridSearchCV
-
 # Load training and test datasets
 train = pd.read_csv(
     r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\data_prepared\training_dataset.csv"
@@ -25,7 +24,7 @@ X_test = test.drop(columns=["UBS log_return", "Date"])
 y_test = test["UBS log_return"]
 
 # Initialize Random Forest
-rf_model = RandomForestRegressor(n_estimators=100, max_depth=5, random_state=42)
+rf_model = RandomForestRegressor(n_estimators=100, max_depth=10, random_state=42)
 
 # Train and evaluate
 rf_model.fit(X_train, y_train)
@@ -50,10 +49,34 @@ plt.title("Actual vs Predicted Stock Returns for UBS using Random Forest", fonts
 plt.xlabel("Date", fontsize=12)
 plt.ylabel("UBS Log Return", fontsize=12)
 plt.legend()
-plt.tight_layout()  # Adjust layout to fit labels
+plt.tight_layout()
 plt.savefig(
     r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\model\randomforest.png"
 )
-
-# Show the plot
 plt.show()
+
+
+# rf = RandomForestRegressor()
+
+# # Set up hyperparameters to tune
+# param_grid = {
+#     'n_estimators': [100, 200, 300],
+#     'max_depth': [10, 20, None],
+#     'min_samples_split': [2, 5, 10],
+#     'min_samples_leaf': [1, 2, 4],
+#     'max_features': ['auto', 'sqrt', 'log2'],
+#     'bootstrap': [True, False]
+# }
+
+# # GridSearchCV to find the best hyperparameters
+# grid_search = GridSearchCV(estimator=rf, param_grid=param_grid, cv=5, n_jobs=-1, verbose=2)
+
+# # Fit the model
+# grid_search.fit(X_train, y_train)
+
+# # Print the best hyperparameters
+# print(f"Best Hyperparameters: {grid_search.best_params_}")
+
+# # Use the best estimator to predict
+# best_rf = grid_search.best_estimator_
+# y_pred = best_rf.predict(X_test)
