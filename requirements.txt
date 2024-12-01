@@ -23,4 +23,8 @@ yahoo_fin
 typing
 datetime
 os
+
+#ML
+tensorflow
+scikit-learn
 pymc
