@@ -6,64 +6,99 @@ import matplotlib.dates as mdates
 
 # from sklearn.model_selection import GridSearchCV
 
-# Load training and test datasets
-train = pd.read_csv(
-    r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\data_prepared\training_dataset.csv"
-)
-test = pd.read_csv(
-    r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\data_prepared\testing_dataset.csv"
-)
 
-# Ensure Date is in datetime format
-train["Date"] = pd.to_datetime(train["Date"])
-test["Date"] = pd.to_datetime(test["Date"])
+def fit_decision_tree(train_path, test_path):
+    """
+    Fits a Decision Tree Regressor on the training data and evaluates it on the test data.
 
-# target-explanatory variables split
-X_train = train.drop(columns=["UBS log_return", "Date"])
-y_train = train["UBS log_return"]
-X_test = test.drop(columns=["UBS log_return", "Date"])
-y_test = test["UBS log_return"]
+    Parameters:
+    - train_path (str): Path to the training dataset.
+    - test_path (str): Path to the testing dataset.
 
-# Train the Decision Tree model
-model = DecisionTreeRegressor(max_depth=5, random_state=42)
-model.fit(X_train, y_train)
+    Returns:
+    - y_test (pd.Series): Actual target values from the test dataset.
+    - y_pred (np.ndarray): Predicted target values from the Decision Tree model.
+    - test_dates (pd.Series): Date column from the test dataset for plotting.
+    """
+    # Load training and test datasets
+    train = pd.read_csv(train_path)
+    test = pd.read_csv(test_path)
 
-# Make predictions
-y_pred = model.predict(X_test)
+    # Ensure Date is in datetime format
+    train["Date"] = pd.to_datetime(train["Date"])
+    test["Date"] = pd.to_datetime(test["Date"])
 
-# Evaluation Metrics
-mae = mean_absolute_error(y_test, y_pred)
-mse = mean_squared_error(y_test, y_pred)
-r2 = r2_score(y_test, y_pred)
+    # Target-explanatory variables split
+    X_train = train.drop(columns=["UBS log_return", "Date"])
+    y_train = train["UBS log_return"]
+    X_test = test.drop(columns=["UBS log_return", "Date"])
+    y_test = test["UBS log_return"]
 
-# Print Results
-print(f"Mean Absolute Error (MAE): {mae:.4f}")
-print(f"Mean Squared Forecast Error (MSFE): {mse:.4f}")
-print(f"R² Score: {r2:.4f}")
+    # Train the Decision Tree model
+    model = DecisionTreeRegressor(max_depth=5, random_state=42)
+    model.fit(X_train, y_train)
 
-plt.figure(figsize=(10, 6))
+    # Make predictions
+    y_pred = model.predict(X_test)
 
-# Plot Actual values vs Predicted values
-plt.plot(test["Date"], y_test, label="Actual", color="blue", alpha=0.6)
-plt.plot(test["Date"], y_pred, label="Predicted", color="red", alpha=0.6)
+    # Evaluation Metrics
+    mae = mean_absolute_error(y_test, y_pred)
+    mse = mean_squared_error(y_test, y_pred)
+    r2 = r2_score(y_test, y_pred)
 
-# Format x-axis for dates (using DateFormatter for readability)
-plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m"))
-plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
-plt.xticks(rotation=45)
+    # Print Results
+    print(f"Mean Absolute Error (MAE): {mae:.4f}")
+    print(f"Mean Squared Forecast Error (MSFE): {mse:.4f}")
+    print(f"R² Score: {r2:.4f}")
 
-# Add labels and title
-plt.title("Actual vs Predicted Stock Returns for UBS using Decision Trees", fontsize=14)
-plt.xlabel("Date", fontsize=12)
-plt.ylabel("UBS Log Return", fontsize=12)
-plt.legend()
-plt.tight_layout()
-plt.savefig(
-    r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\model\decisiontree.png"
-)
+    return y_test, y_pred, test["Date"]
 
-# Show the plot
-plt.show()
+
+def plot_results(y_test, y_pred, test_dates, output_path):
+    """
+    Plots actual vs. predicted values and saves the plot to a file.
+
+    Parameters:
+    - y_test (pd.Series): Actual target values from the test dataset.
+    - y_pred (np.ndarray): Predicted target values from the model.
+    - test_dates (pd.Series): Date column for x-axis.
+    - output_path (str): Path to save the generated plot.
+    """
+    plt.figure(figsize=(10, 6))
+
+    # Plot Actual values vs Predicted values
+    plt.plot(test_dates, y_test, label="Actual", color="blue", alpha=0.6)
+    plt.plot(test_dates, y_pred, label="Predicted", color="red", alpha=0.6)
+
+    # Format x-axis for dates (using DateFormatter for readability)
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m"))
+    plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
+    plt.xticks(rotation=45)
+
+    # Add labels and title
+    plt.title(
+        "Actual vs Predicted Stock Returns for UBS using Decision Trees", fontsize=14
+    )
+    plt.xlabel("Date", fontsize=12)
+    plt.ylabel("UBS Log Return", fontsize=12)
+    plt.legend()
+    plt.tight_layout()
+
+    # Save and show the plot
+    plt.savefig(output_path)
+    plt.show()
+
+
+train_path = r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\data_prepared\training_dataset.csv"
+test_path = r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\data_prepared\testing_dataset.csv"
+output_path = r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\model\decisiontree.png"
+
+# Fit model and get results
+y_test, y_pred, test_dates = fit_decision_tree(train_path, test_path)
+
+# Plot results
+plot_results(y_test, y_pred, test_dates, output_path)
+
 
 # # Set up hyperparameter grid
 # param_grid = {
