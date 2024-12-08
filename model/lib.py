@@ -45,6 +45,7 @@ def plot_predictions_vs_actual(
     predictions (pd.DataFrame): DataFrame containing predicted values, including a 'Date' column and 'Prediction' column.
     testing_dataset (pd.DataFrame): DataFrame containing actual values, including a 'Date' column and target variable column.
     """
+
     target_var = "UBS log_return"
 
     # Ensure inputs contain the required columns
