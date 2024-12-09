@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from statsmodels.tsa.arima.model import ARIMA
 from pmdarima import auto_arima
 from statsmodels.tsa.stattools import adfuller
+import warnings
 
 
 def check_stationarity(series: pd.Series) -> bool:
@@ -36,6 +37,9 @@ def arimax_model(training_dataset: pd.DataFrame, testing_dataset: pd.DataFrame) 
     Returns:
     - pd.DataFrame: DataFrame containing Date, Prediction, and Actual values.
     """
+    import warnings
+    warnings.filterwarnings("ignore", category=RuntimeWarning)
+
     target_var = "UBS log_return"
     exogenous_vars = [
         "Bid-Ask Spread",
