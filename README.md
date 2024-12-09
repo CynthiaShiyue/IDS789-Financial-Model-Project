@@ -1,6 +1,6 @@
 # IDS789-Financial-Model-Project
 
-## Group #5: Cynthia Zhou, Kaisen Yao, Mona Saeed, Skye A., Arko Bhattacharya
+### Group #5: Cynthia Zhou, Kaisen Yao, Mona Saeed, Skye A., Arko Bhattacharya
 
 ## Overview
 This project involves modeling stock prices based on risk indicators, comparing different machine learning models using time series analysis.
