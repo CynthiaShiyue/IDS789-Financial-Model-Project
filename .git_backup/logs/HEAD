@@ -1,0 +1,30 @@
+0000000000000000000000000000000000000000 84c1bebfe9950c296441938f44834de427862126 Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1732156645 -0500	clone: from https://github.com/CynthiaShiyue/IDS789-Financial-Model-Project.git
+84c1bebfe9950c296441938f44834de427862126 84c1bebfe9950c296441938f44834de427862126 Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1732156721 -0500	checkout: moving from main to arko
+84c1bebfe9950c296441938f44834de427862126 b1805831de002a4469844491f0e56620f2821d88 Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1732159437 -0500	commit: stock analysis
+b1805831de002a4469844491f0e56620f2821d88 034fb8f5c0099d8944a3a33c301a85da087f93dc Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1732221931 -0500	commit: adding notebook
+034fb8f5c0099d8944a3a33c301a85da087f93dc 337453377606634585db70aaa7a9fef31a43d3d5 Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1732222144 -0500	pull: Merge made by the 'ort' strategy.
+337453377606634585db70aaa7a9fef31a43d3d5 84c1bebfe9950c296441938f44834de427862126 Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1732222353 -0500	checkout: moving from arko to main
+84c1bebfe9950c296441938f44834de427862126 9407c3b581f2a33093dce31b4f51f9dd24cdba4f Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1732222358 -0500	pull: Fast-forward
+9407c3b581f2a33093dce31b4f51f9dd24cdba4f 986e80ddd5794f0d54528a962613d83f6f6d983a Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1732222459 -0500	commit: adding notebook
+986e80ddd5794f0d54528a962613d83f6f6d983a f7c907350610a58dcc9bc28fc384cee04bec4aae Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1732222539 -0500	merge arko: Merge made by the 'ort' strategy.
+f7c907350610a58dcc9bc28fc384cee04bec4aae 337453377606634585db70aaa7a9fef31a43d3d5 Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1732222559 -0500	checkout: moving from main to arko
+337453377606634585db70aaa7a9fef31a43d3d5 f7c907350610a58dcc9bc28fc384cee04bec4aae Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1732222589 -0500	checkout: moving from arko to main
+f7c907350610a58dcc9bc28fc384cee04bec4aae 337453377606634585db70aaa7a9fef31a43d3d5 Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1732223272 -0500	checkout: moving from main to arko
+337453377606634585db70aaa7a9fef31a43d3d5 debc2ee634bff6f3b4f2200e74180522d213b558 Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1732223344 -0500	pull origin main: Merge made by the 'ort' strategy.
+debc2ee634bff6f3b4f2200e74180522d213b558 f7c907350610a58dcc9bc28fc384cee04bec4aae Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1732547345 -0500	checkout: moving from arko to main
+f7c907350610a58dcc9bc28fc384cee04bec4aae 143f7f422079a2696b14e868a1c8ebedf2455b5b Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1732547350 -0500	pull: Merge made by the 'ort' strategy.
+143f7f422079a2696b14e868a1c8ebedf2455b5b debc2ee634bff6f3b4f2200e74180522d213b558 Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1732547474 -0500	checkout: moving from main to arko
+debc2ee634bff6f3b4f2200e74180522d213b558 5b3435af8b14a240304d39d27b3556b8575c2183 Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1732547478 -0500	merge main: Merge made by the 'ort' strategy.
+5b3435af8b14a240304d39d27b3556b8575c2183 a8a30cb6293cb79a3cf77bfddd2cbc5d3d3b88de Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1732954541 -0500	commit: LSTM model
+a8a30cb6293cb79a3cf77bfddd2cbc5d3d3b88de 143f7f422079a2696b14e868a1c8ebedf2455b5b Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1733266026 -0500	checkout: moving from arko to main
+143f7f422079a2696b14e868a1c8ebedf2455b5b a3f2547a1fee8056f592f22d9b45e395087257c1 Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1733266034 -0500	pull: Fast-forward
+a3f2547a1fee8056f592f22d9b45e395087257c1 a8a30cb6293cb79a3cf77bfddd2cbc5d3d3b88de Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1733266115 -0500	checkout: moving from main to arko
+a8a30cb6293cb79a3cf77bfddd2cbc5d3d3b88de a3f2547a1fee8056f592f22d9b45e395087257c1 Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1733266132 -0500	merge main: Fast-forward
+a3f2547a1fee8056f592f22d9b45e395087257c1 a58acdc87186761fcc384ee4f3e9287c03d9dc75 Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1733268133 -0500	commit: updated report notebook and associated files
+a58acdc87186761fcc384ee4f3e9287c03d9dc75 a3f2547a1fee8056f592f22d9b45e395087257c1 Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1733268164 -0500	checkout: moving from arko to main
+a3f2547a1fee8056f592f22d9b45e395087257c1 11da792877f8a79d367a405f7c2b93901fddee27 Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1733268174 -0500	pull: Fast-forward
+11da792877f8a79d367a405f7c2b93901fddee27 a58acdc87186761fcc384ee4f3e9287c03d9dc75 Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1733268219 -0500	checkout: moving from main to arko
+a58acdc87186761fcc384ee4f3e9287c03d9dc75 11da792877f8a79d367a405f7c2b93901fddee27 Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1733268240 -0500	checkout: moving from arko to main
+11da792877f8a79d367a405f7c2b93901fddee27 751b0e983141afc7431787fb9e56a651739cb96e Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1733268295 -0500	commit: updated report
+751b0e983141afc7431787fb9e56a651739cb96e 09e451d113a4db76663acb71a1c54001a262e3a4 Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1733738065 -0500	pull: Fast-forward
+09e451d113a4db76663acb71a1c54001a262e3a4 09e451d113a4db76663acb71a1c54001a262e3a4 Arko Bhattacharya <arko_bhattacharya@hotmail.com> 1733738259 -0500	checkout: moving from main to main
