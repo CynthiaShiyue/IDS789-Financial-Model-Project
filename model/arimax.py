@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from statsmodels.tsa.arima.model import ARIMA
 from pmdarima import auto_arima
 from statsmodels.tsa.stattools import adfuller
-import warnings
+import matplotlib.dates as mdates
 
 
 def check_stationarity(series: pd.Series) -> bool:
@@ -110,6 +110,10 @@ def plot_predictions_vs_actual(predictions: pd.DataFrame) -> None:
     
     # Add legend
     plt.legend(fontsize=12)
+
+    # Format x-axis to show ticks for each month
+    plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
     
     # Rotate x-axis labels for better visibility
     plt.xticks(rotation=45, fontsize=10)
