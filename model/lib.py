@@ -98,3 +98,39 @@ def plot_predictions_vs_actual(
 
     # Show the plot
     plt.show()
+
+
+def plot_results(y_test, y_pred, test_dates, title, output_path=None):
+    """
+    Plots actual vs. predicted values and optionally saves the plot to a file.
+
+    Parameters:
+    - y_test (pd.Series): Actual target values from the test dataset.
+    - y_pred (np.ndarray): Predicted target values from the model.
+    - test_dates (pd.Series): Date column for x-axis.
+    - title (str): Title for the plot.
+    - output_path (str, optional): Path to save the generated plot. If None, the plot won't be saved.
+    """
+    plt.figure(figsize=(10, 6))
+
+    # Plot Actual values vs Predicted values
+    plt.plot(test_dates, y_test, label="Actual", color="blue", alpha=0.6)
+    plt.plot(test_dates, y_pred, label="Predicted", color="red", alpha=0.6)
+
+    # Format x-axis for dates (using DateFormatter for readability)
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m"))
+    plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
+    plt.xticks(rotation=45)
+
+    # Add labels and title
+    plt.title(title, fontsize=14)
+    plt.xlabel("Date", fontsize=12)
+    plt.ylabel("Values", fontsize=12)
+    plt.legend()
+    plt.tight_layout()
+
+    # Save and/or show the plot
+    if output_path:
+        plt.savefig(output_path)
+        print(f"Plot saved to {output_path}")
+    plt.show()
