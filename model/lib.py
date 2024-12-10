@@ -69,7 +69,7 @@ def plot_predictions_vs_actual(
         predictions["Prediction"],
         label="Predictions",
         color="blue",
-        linestyle="--",
+        linestyle="-",
     )
     plt.plot(
         x,
