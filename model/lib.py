@@ -39,98 +39,94 @@ def plot_predictions_vs_actual(
     predictions: pd.DataFrame, testing_dataset: pd.DataFrame
 ) -> None:
     """
-    Plot predictions and actual values on the same graph with different colors.
+    Plot predictions and actual values on the same graph with dates as the x-axis.
 
     Parameters:
-    predictions (pd.DataFrame): DataFrame containing predicted values, including a 'Date' column and 'Prediction' column.
-    testing_dataset (pd.DataFrame): DataFrame containing actual values, including a 'Date' column and target variable column.
+    predictions (pd.DataFrame): Predicted values from the model, including the target variable column.
+    testing_dataset (pd.DataFrame): Actual values from the test dataset, including the target variable column.
     """
 
     target_var = "UBS log_return"
 
-    # Ensure inputs contain the required columns
-    if "Date" not in predictions.columns or "Date" not in testing_dataset.columns:
-        raise ValueError("Both input datasets must contain a 'Date' column.")
+    # Ensure inputs contain the target variable
     if target_var not in testing_dataset.columns:
+        raise ValueError(f"Target variable '{target_var}' not found in input datasets.")
+
+    # Ensure the testing dataset index or column contains datetime values
+    if "Date" in testing_dataset.columns:
+        x = pd.to_datetime(testing_dataset["Date"])
+    elif isinstance(testing_dataset.index, pd.DatetimeIndex):
+        x = testing_dataset.index
+    else:
         raise ValueError(
-            f"Target variable '{target_var}' not found in the testing dataset."
+            "Testing dataset must have a 'Date' column or datetime index for the x-axis."
         )
-    if "Prediction" not in predictions.columns:
-        raise ValueError("'Predictions' DataFrame must contain a 'Prediction' column.")
-
-    # Ensure Date columns are in datetime format
-    predictions["Date"] = pd.to_datetime(predictions["Date"])
-    testing_dataset["Date"] = pd.to_datetime(testing_dataset["Date"])
-
-    # Merge the dataframes on the Date column for consistent x-axis
-    merged_data = pd.merge(predictions, testing_dataset, on="Date")
 
     # Plot
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(12, 6))
     plt.plot(
-        merged_data["Date"],
-        merged_data["Prediction"],
-        label="Predicted",
+        x,
+        predictions["Prediction"],
+        label="Predictions",
         color="blue",
+        marker="o",
         linestyle="--",
-        alpha=0.7,
     )
     plt.plot(
-        merged_data["Date"],
-        merged_data[target_var],
-        label="Actual",
+        x,
+        testing_dataset[target_var],
+        label="Actual Y Values",
         color="red",
+        marker="o",
         linestyle="-",
-        alpha=0.7,
     )
 
-    # Format x-axis for dates
-    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m"))
-    plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
-    plt.xticks(rotation=45)
-
-    # Add labels and title
-    plt.title("Actual vs Predicted Stock Returns for UBS", fontsize=14)
-    plt.xlabel("Date", fontsize=12)
-    plt.ylabel("UBS Log Return", fontsize=12)
+    # Add titles and labels
+    plt.title("Predictions vs Actual Y Values")
+    plt.xlabel("Date")
+    plt.ylabel("Values")
     plt.legend()
-    plt.tight_layout()
+    plt.grid(True)
+
+    # Rotate x-axis labels for better readability
+    plt.xticks(rotation=45)
 
     # Show the plot
-    plt.show()
-
-
-def plot_results(y_test, y_pred, test_dates, title, output_path=None):
-    """
-    Plots actual vs. predicted values and optionally saves the plot to a file.
-
-    Parameters:
-    - y_test (pd.Series): Actual target values from the test dataset.
-    - y_pred (np.ndarray): Predicted target values from the model.
-    - test_dates (pd.Series): Date column for x-axis.
-    - title (str): Title for the plot.
-    - output_path (str, optional): Path to save the generated plot. If None, the plot won't be saved.
-    """
-    plt.figure(figsize=(10, 6))
-
-    # Plot Actual values vs Predicted values
-    plt.plot(test_dates, y_test, label="Actual", color="blue", alpha=0.6)
-    plt.plot(test_dates, y_pred, label="Predicted", color="red", alpha=0.6)
-
-    # Format x-axis for dates (using DateFormatter for readability)
-    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m"))
-    plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
-    plt.xticks(rotation=45)
-
-    # Add labels and title
-    plt.title(title, fontsize=14)
-    plt.xlabel("Date", fontsize=12)
-    plt.ylabel("Values", fontsize=12)
-    plt.legend()
     plt.tight_layout()
-
-    # Save and/or show the plot
-    if output_path:
-        plt.savefig(output_path)
-        print(f"Plot saved to {output_path}")
     plt.show()
+
+
+# def plot_results(y_test, y_pred, test_dates, title, output_path=None):
+#     """
+#     Plots actual vs. predicted values and optionally saves the plot to a file.
+
+#     Parameters:
+#     - y_test (pd.Series): Actual target values from the test dataset.
+#     - y_pred (np.ndarray): Predicted target values from the model.
+#     - test_dates (pd.Series): Date column for x-axis.
+#     - title (str): Title for the plot.
+#     - output_path (str, optional): Path to save the generated plot. If None, the plot won't be saved.
+#     """
+#     plt.figure(figsize=(10, 6))
+
+#     # Plot Actual values vs Predicted values
+#     plt.plot(test_dates, y_test, label="Actual", color="blue", alpha=0.6)
+#     plt.plot(test_dates, y_pred, label="Predicted", color="red", alpha=0.6)
+
+#     # Format x-axis for dates (using DateFormatter for readability)
+#     plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m"))
+#     plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
+#     plt.xticks(rotation=45)
+
+#     # Add labels and title
+#     plt.title(title, fontsize=14)
+#     plt.xlabel("Date", fontsize=12)
+#     plt.ylabel("Values", fontsize=12)
+#     plt.legend()
+#     plt.tight_layout()
+
+#     # Save and/or show the plot
+#     if output_path:
+#         plt.savefig(output_path)
+#         print(f"Plot saved to {output_path}")
+#     plt.show()
