@@ -67,8 +67,8 @@ def plot_results(y_test, y_pred, test_dates, output_path):
     plt.figure(figsize=(10, 6))
 
     # Plot Actual values vs Predicted values
-    plt.plot(test_dates, y_test, label="Actual", color="blue", alpha=0.6)
-    plt.plot(test_dates, y_pred, label="Predicted", color="red", alpha=0.6)
+    plt.plot(test_dates, y_test, label="Actual", color="blue")
+    plt.plot(test_dates, y_pred, label="Predicted", color="red")
 
     # Format x-axis for dates (using DateFormatter for readability)
     plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m"))
