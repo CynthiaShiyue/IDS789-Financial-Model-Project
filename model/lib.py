@@ -20,8 +20,7 @@ def msfe(predictions: pd.DataFrame, testing_dataset: pd.DataFrame) -> float:
 
     # Ensure inputs contain the target variable
     if (
-        target_var not in predictions.columns
-        or target_var not in testing_dataset.columns
+        target_var not in testing_dataset.columns
     ):
         raise ValueError(f"Target variable '{target_var}' not found in input datasets.")
 

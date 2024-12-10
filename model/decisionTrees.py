@@ -88,39 +88,39 @@ def plot_results(y_test, y_pred, test_dates, output_path):
     plt.savefig(output_path)
     plt.show()
 
+if __name__ == "__main__":
+    train_path = r"data_prepared/training_dataset.csv"
+    test_path = r"data_prepared/testing_dataset.csv"
+    output_path = r"model/decisiontree.png"
 
-train_path = r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\data_prepared\training_dataset.csv"
-test_path = r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\data_prepared\testing_dataset.csv"
-output_path = r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\model\decisiontree.png"
+    # Fit model and get results
+    y_test, y_pred, test_dates = fit_decision_tree(train_path, test_path)
 
-# Fit model and get results
-y_test, y_pred, test_dates = fit_decision_tree(train_path, test_path)
-
-# Plot results
-plot_results(y_test, y_pred, test_dates, output_path)
+    # Plot results
+    plot_results(y_test, y_pred, test_dates, output_path)
 
 
-# # Set up hyperparameter grid
-# param_grid = {
-#     "max_depth": [3, 5, 10, None],
-#     "min_samples_split": [2, 5, 10],
-#     "min_samples_leaf": [1, 2, 4],
-# }
+    # # Set up hyperparameter grid
+    # param_grid = {
+    #     "max_depth": [3, 5, 10, None],
+    #     "min_samples_split": [2, 5, 10],
+    #     "min_samples_leaf": [1, 2, 4],
+    # }
 
-# # Initialize model and GridSearchCV
-# model = DecisionTreeRegressor(random_state=42)
-# grid_search = GridSearchCV(
-#     estimator=model, param_grid=param_grid, cv=5, scoring="neg_mean_squared_error"
-# )
+    # # Initialize model and GridSearchCV
+    # model = DecisionTreeRegressor(random_state=42)
+    # grid_search = GridSearchCV(
+    #     estimator=model, param_grid=param_grid, cv=5, scoring="neg_mean_squared_error"
+    # )
 
-# # Fit grid search
-# grid_search.fit(X_train, y_train)
+    # # Fit grid search
+    # grid_search.fit(X_train, y_train)
 
-# # Get the best model
-# best_model = grid_search.best_estimator_
-# print("Best Parameters:", grid_search.best_params_)
+    # # Get the best model
+    # best_model = grid_search.best_estimator_
+    # print("Best Parameters:", grid_search.best_params_)
 
-# # Predict and evaluate
-# y_pred = best_model.predict(X_test)
-# print("MAE:", mean_absolute_error(y_test, y_pred))
-# print("MSE:", mean_squared_error(y_test, y_pred))
+    # # Predict and evaluate
+    # y_pred = best_model.predict(X_test)
+    # print("MAE:", mean_absolute_error(y_test, y_pred))
+    # print("MSE:", mean_squared_error(y_test, y_pred))
