@@ -69,7 +69,6 @@ def plot_predictions_vs_actual(
         predictions["Prediction"],
         label="Predictions",
         color="blue",
-        marker="o",
         linestyle="--",
     )
     plt.plot(
@@ -77,7 +76,6 @@ def plot_predictions_vs_actual(
         testing_dataset[target_var],
         label="Actual Y Values",
         color="red",
-        marker="o",
         linestyle="-",
     )
 
