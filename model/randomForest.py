@@ -7,7 +7,7 @@ import matplotlib.dates as mdates
 
 def train_and_evaluate_rf_model(
     train_path: str, test_path: str, target_column: str
-) -> tuple[pd.Series, pd.Series, pd.Series]:
+) :
     """
     Train a Random Forest model and evaluate its performance.
 
@@ -91,19 +91,19 @@ def plot_predictions(
     plt.show()
 
 
-train_path = r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\data_prepared\training_dataset.csv"
-test_path = r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\data_prepared\testing_dataset.csv"
-output_path = r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\model\randomforest.png"
+# train_path = r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\data_prepared\training_dataset.csv"
+# test_path = r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\data_prepared\testing_dataset.csv"
+# output_path = r"C:\Users\DELL\OneDrive\Desktop\IDS789-Financial-Model-Project\model\randomforest.png"
 
-# Train model and get predictions
-test_dates, y_test, y_pred = train_and_evaluate_rf_model(
-    train_path=train_path, test_path=test_path, target_column="UBS log_return"
-)
+# # Train model and get predictions
+# test_dates, y_test, y_pred = train_and_evaluate_rf_model(
+#     train_path=train_path, test_path=test_path, target_column="UBS log_return"
+# )
 
-# Plot results
-plot_predictions(
-    test_dates=test_dates, y_test=y_test, y_pred=y_pred, output_path=output_path
-)
+# # Plot results
+# plot_predictions(
+#     test_dates=test_dates, y_test=y_test, y_pred=y_pred, output_path=output_path
+# )
 
 
 # rf = RandomForestRegressor()
