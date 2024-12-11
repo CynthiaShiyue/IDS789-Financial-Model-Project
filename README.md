@@ -20,6 +20,6 @@ PS: Need to create pymc_env, a new environment to run pymc3
 - [Final Report Notebook](./final_report.ipynb)
 
 ## Other Links
--Outline: https://docs.google.com/document/d/1RlstvzYAbd9bZOO_hJFi55FrNSSj7Yr6GUON-wp-fbI/edit?tab=t.0
--[Final Project Paper] (https://docs.google.com/document/d/1HR1vF0VVfbKLleapBkiQRVGrRWRj8lODN-sHa15WmJQ/edit?tab=t.0)
--Final Presentation: https://docs.google.com/presentation/d/1UunCNICSf34YauQ1R83-dCNnTRuKHXUrvVOV2lflpA8/edit#slide=id.g32101b8b088_0_2
+- Outline: https://docs.google.com/document/d/1RlstvzYAbd9bZOO_hJFi55FrNSSj7Yr6GUON-wp-fbI/edit?tab=t.0  
+- [Final Project Paper] (https://docs.google.com/document/d/1HR1vF0VVfbKLleapBkiQRVGrRWRj8lODN-sHa15WmJQ/edit?tab=t.0)  
+- Final Presentation: https://docs.google.com/presentation/d/1UunCNICSf34YauQ1R83-dCNnTRuKHXUrvVOV2lflpA8/edit#slide=id.g32101b8b088_0_2
