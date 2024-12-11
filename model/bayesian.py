@@ -100,6 +100,6 @@ if __name__ == "__main__":
     training_dataset, testing_dataset = load()
     predictions_df = bayesian_model(training_dataset, testing_dataset)
     #print(predictions_df.head(5))
-    #plot_predictions_vs_actual(predictions_df, testing_dataset)
+    plot_predictions_vs_actual(predictions_df, testing_dataset)
     print(msfe(predictions_df, testing_dataset))
     
